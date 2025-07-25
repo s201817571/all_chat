@@ -42,6 +42,7 @@ html, body {
   border-bottom: 1px solid #e9edef;
   position: relative;
   z-index: 1000;
+  flex-shrink: 0;
 }
 
 .chat-header::after {
@@ -71,10 +72,12 @@ html, body {
   margin-right: 12px;
   font-size: 18px;
   color: white;
+  flex-shrink: 0;
 }
 
 .chat-info {
   flex: 1;
+  min-width: 0;
 }
 
 .chat-name {
@@ -82,6 +85,9 @@ html, body {
   font-weight: 500;
   color: #111b21;
   line-height: 21px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chat-status {
@@ -94,7 +100,8 @@ html, body {
 #messagesContainer {
   flex: 1;
   overflow-y: auto;
-  padding: 12px 7% 12px 7%;
+  overflow-x: hidden;
+  padding: 12px 16px;
   background-color: #efeae2;
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   display: flex;
@@ -110,7 +117,7 @@ html, body {
   border-radius: 7.5px;
   position: relative;
   white-space: pre-wrap;
-  max-width: 65%;
+  max-width: 80%;
   word-wrap: break-word;
   box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
   align-self: flex-start;
@@ -124,12 +131,6 @@ html, body {
   background: #d9fdd3;
   align-self: flex-end;
   color: #111b21;
-}
-
-/* Message content wrapper */
-.message-content {
-  position: relative;
-  min-height: 20px;
 }
 
 /* Message timestamp */
@@ -148,7 +149,7 @@ html, body {
   color: #667781;
 }
 
-/* Delete button - only "x" */
+/* Delete button */
 .delete-btn {
   position: absolute;
   top: 2px;
@@ -181,12 +182,13 @@ html, body {
 /* Input area */
 .input-area {
   background: #f0f2f5;
-  padding: 5px 16px;
+  padding: 8px 16px;
   display: flex;
   align-items: flex-end;
   gap: 8px;
   border-top: 1px solid #e9edef;
   min-height: 62px;
+  flex-shrink: 0;
 }
 
 textarea {
@@ -233,6 +235,7 @@ button {
   font-size: 20px;
   transition: background-color 0.2s;
   margin-bottom: 5px;
+  flex-shrink: 0;
 }
 
 button:hover {
@@ -305,6 +308,7 @@ button::before {
 @media screen and (min-width: 1025px) {
   body {
     background: #d1d7db;
+    padding: 20px;
   }
   
   body::before {
@@ -345,6 +349,8 @@ button::before {
   .app-container {
     border-radius: 0;
     box-shadow: none;
+    margin: 0;
+    padding: 0;
   }
   
   #messagesContainer {
@@ -366,10 +372,20 @@ button::before {
   .app-container {
     border-radius: 0;
     box-shadow: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .container {
+    width: 100%;
+    height: 100%;
   }
   
   .chat-header {
     padding: 10px 16px;
+    height: 56px;
   }
   
   .profile-pic {
@@ -383,7 +399,7 @@ button::before {
   }
   
   #messagesContainer {
-    padding: 12px 5% 12px 5%;
+    padding: 12px 16px;
   }
   
   .message {
@@ -393,11 +409,12 @@ button::before {
   }
   
   .input-area {
-    padding: 8px 12px;
+    padding: 8px 16px;
+    min-height: 60px;
   }
   
   textarea {
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
     padding: 8px 12px 10px;
   }
   
@@ -412,6 +429,7 @@ button::before {
 @media screen and (max-width: 480px) {
   .chat-header {
     padding: 8px 12px;
+    height: 54px;
   }
   
   .profile-pic {
@@ -430,7 +448,7 @@ button::before {
   }
   
   #messagesContainer {
-    padding: 8px 4% 8px 4%;
+    padding: 8px 12px;
   }
   
   .message {
@@ -444,7 +462,7 @@ button::before {
   }
   
   .input-area {
-    padding: 6px 10px;
+    padding: 6px 12px;
     min-height: 56px;
   }
   
@@ -460,21 +478,63 @@ button::before {
   }
 }
 
-/* Landscape mobile */
-@media screen and (max-height: 500px) and (orientation: landscape) {
+/* Very small screens */
+@media screen and (max-width: 320px) {
   .chat-header {
-    height: 50px;
-    padding: 8px 16px;
+    padding: 6px 10px;
+  }
+  
+  .profile-pic {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin-right: 8px;
+  }
+  
+  .chat-name {
+    font-size: 14px;
+  }
+  
+  #messagesContainer {
+    padding: 6px 10px;
+  }
+  
+  .message {
+    max-width: 92%;
+    font-size: 12px;
   }
   
   .input-area {
-    min-height: 50px;
+    padding: 4px 10px;
+    min-height: 52px;
+  }
+  
+  button {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+
+/* Landscape mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .chat-header {
+    height: 48px;
+    padding: 6px 16px;
+  }
+  
+  .input-area {
+    min-height: 48px;
     padding: 4px 16px;
   }
   
   button {
     width: 40px;
     height: 40px;
+  }
+  
+  #messagesContainer {
+    padding: 8px 16px;
   }
 }
 
@@ -487,6 +547,20 @@ textarea:focus {
 button:focus {
   outline: 2px solid #00a884;
   outline-offset: 2px;
+}
+
+/* Touch targets for mobile */
+@media (pointer: coarse) {
+  .delete-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+  
+  button {
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
 
 /* Reduced motion */
