@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
+  ],
+  "env": {
+    "FLASK_ENV": "production",
+    "DATABASE_URL": "postgresql://all_chat_messages_user:AjsVczCx7GyRpRJAMdHqAvDnoTaEQs6s@dpg-d21eflh5pdvs73fr520g-a.singapore-postgres.render.com/all_chat_messages"
+  }
+}
