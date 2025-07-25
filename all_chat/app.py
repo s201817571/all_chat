@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # PostgreSQL DB connection string from Render
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://all_chat_messages_user:AjsVczCx7GyRpRJAMdHqAvDnoTaEQs6s@dpg-d21eflh5pdvs73fr520g-a.singapore-postgres.render.com/all_chat_messages'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
